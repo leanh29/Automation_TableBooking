@@ -27,6 +27,9 @@ class FirstStep extends \AcceptanceTester
     }
     public function reloadData()
     {
+        /**
+         * i do reload data
+         */
         $I=$this;
         $I->amOnPage(FunctionPage::$URL);
         $I->waitForElementVisible(FunctionPage::$reloadData);
@@ -34,6 +37,9 @@ class FirstStep extends \AcceptanceTester
     }
     public function deleteData()
     {
+        /**
+         * i do delete data
+         */
         $I=$this;
         $I->amOnPage(FunctionPage::$URL);
         $I->waitForElementVisible(FunctionPage::$delete1);

@@ -1,8 +1,8 @@
 <?php
 use Step\Acceptance\FirstStep;
-use Step\Acceptance\SecondStep;
-use Step\Acceptance\ThirdStep;
-class ThirdCest
+use Step\Acceptance\SortStep;
+use Step\Acceptance\InfoStep;
+class FunctionCest
 {
     public function _before(AcceptanceTester $I)
     {
@@ -12,28 +12,30 @@ class ThirdCest
     public function tryToTest(AcceptanceTester $I)
     {
     }
-    protected $tableID;
-    protected $num;
-    protected $date;
-    protected $des;
-    protected $startTime;
+    protected $reservation;
     public function __construct()
     {
-        $this->tableID='3';
-        $this->num='2';
-        $this->date='10/05/2019';
-        $this->des='le anh';
-        $this->startTime='18';
+        /**
+         * i create an array include information of booking table
+         */
+        $this->reservation=
+            [
+                'tableId'=>"3",
+                'num'=>'4',
+                'date'=>'10/05/2019',
+                'des'=>'check',
+                'startTime'=>'19'
+            ];
     }
     public function clearInput(FirstStep $I, $scenario)
     {
         /**
          *  clear input after fill in all field
          */
-        $I->wantToTest('I want to test if i clear input feild');
+        $I->wantToTest('I want to test if i clear input field');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForClear($this->tableID,$this->num,$this->des,$this->date,$this->startTime);
+        $I=new InfoStep($scenario);
+        $I->inputForClear($this->reservation);
     }
     public function reloadData(FirstStep $I)
     {
@@ -56,7 +58,7 @@ class ThirdCest
          */
         $I->wantToTest('I want to do create new table successfully');
         $I->goToEdit();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->num,$this->date,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $I->inputForCreate($this->reservation);
     }
 }

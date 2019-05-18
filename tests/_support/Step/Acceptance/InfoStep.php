@@ -2,41 +2,47 @@
 namespace Step\Acceptance;
 use Page\Acceptance\UpdatePage;
 use Page\Acceptance\FunctionPage;
-class ThirdStep extends \AcceptanceTester
+class InfoStep extends \AcceptanceTester
 {
-    public function inputForCreate($tableID,$num,$date,$des,$startTime)
+    public function inputForCreate($reservation = array())
     {
+        /**
+         * i do create new booking
+         */
         $I=$this;
         $I->waitForElementVisible(UpdatePage::$tableID,30);
-        $I->fillField(UpdatePage::$tableID,$tableID);
+        $I->fillField(UpdatePage::$tableID,$reservation['tableId']);
         $I->waitForElementVisible(UpdatePage::$numberOfPerson,30);
-        $I->fillField(UpdatePage::$numberOfPerson,$num);
+        $I->fillField(UpdatePage::$numberOfPerson,$reservation['num']);
         $I->waitForElementVisible(UpdatePage::$date,30);
-        $I->fillField(UpdatePage::$date,$date);
+        $I->fillField(UpdatePage::$date,$reservation['date']);
         $I->waitForElementVisible(UpdatePage::$description,30);
-        $I->fillField(UpdatePage::$description,$des);
+        $I->fillField(UpdatePage::$description,$reservation['des']);
         $I->waitForElementVisible(UpdatePage::$startTime,30);
-        $I->fillField(UpdatePage::$startTime,$startTime);
+        $I->fillField(UpdatePage::$startTime,$reservation['startTime']);
         $I->click(FunctionPage::$addButton);
     }
-    public function inputForClear($tableID,$num,$date,$des,$startTime)
+    public function inputForClear($reservation = array())
     {
+        /**
+         * i do fill in all date anđ then delete them
+         */
         $I=$this;
         $I->waitForElementVisible(UpdatePage::$tableID,30);
         $I->clearField(UpdatePage::$tableID);
-        $I->fillField(UpdatePage::$tableID,$tableID);
+        $I->fillField(UpdatePage::$tableID,$reservation['tableId']);
         $I->waitForElementVisible(UpdatePage::$numberOfPerson,30);
         $I->clearField(UpdatePage::$numberOfPerson);
-        $I->fillField(UpdatePage::$numberOfPerson,$num);
+        $I->fillField(UpdatePage::$numberOfPerson,$reservation['num']);
         $I->waitForElementVisible(UpdatePage::$date,30);
         $I->clearField(UpdatePage::$date);
-        $I->fillField(UpdatePage::$date,$date);
+        $I->fillField(UpdatePage::$date,$reservation['date']);
         $I->waitForElementVisible(UpdatePage::$description,30);
         $I->clearField(UpdatePage::$description);;
-        $I->fillField(UpdatePage::$description,$des);
+        $I->fillField(UpdatePage::$description,$reservation['des']);
         $I->waitForElementVisible(UpdatePage::$startTime,30);
         $I->clearField(UpdatePage::$description);
-        $I->fillField(UpdatePage::$startTime,$startTime);
+        $I->fillField(UpdatePage::$startTime,$reservation['startTime']);
         $I->click(FunctionPage::$clearButton);
     }
     public function erroNotification()

@@ -3,7 +3,7 @@ namespace Step\Acceptance;
 use Page\Acceptance\SortPage;
 use Page\Acceptance\UpdatePage;
 use Page\Acceptance\FunctionPage;
-class SecondStep extends \AcceptanceTester
+class SortStep extends \AcceptanceTester
 {
     public function idSort()
     {
@@ -26,7 +26,7 @@ class SecondStep extends \AcceptanceTester
     public function tableIdSort()
     {
         /**
-         * sort in table column
+         * sort in type column
          */
         $I=$this;
         $I->amOnPage(FunctionPage::$URL);

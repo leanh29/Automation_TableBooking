@@ -1,7 +1,7 @@
 <?php 
 use Step\Acceptance\FirstStep;
-use Step\Acceptance\ThirdStep;
-class FirstCest
+use Step\Acceptance\InfoStep;
+class BookingCest
 {
     public function _before(AcceptanceTester $I)
     {
@@ -23,19 +23,20 @@ class FirstCest
     protected $noTime;
     protected $invalidTime;
     protected $erroMes;
+    protected $reservation;
     public function __construct()
     {
-        $this->tableID='3';
-        $this->noTableID='';
-        $this->invalidTableId='9';
-        $this->num='2';
-        $this->noNum='';
-        $this->date='10/05/2019';
-        $this->noDate;
-        $this->des='le anh';
-        $this->startTime='18';
-        $this->noTime='';
-        $this->invalidTime='15';
+        /**
+         * i create an array include information of booking table
+         */
+        $this->reservation=
+            [
+                'tableId'=>"3",
+                'num'=>'4',
+                'date'=>'10/05/2019',
+                'des'=>'check',
+                'startTime'=>'19'
+            ];
     }
     public function creataNewSuccessfully(FirstStep $I, $scenario)
     {
@@ -44,8 +45,8 @@ class FirstCest
          */
         $I->wantToTest('I want to do create new table successfully');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->num,$this->date,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $I->inputForCreate($this->reservation);
         $I->comment('Create Successfully');
     }
     public function withoutTableID(FirstStep $I, $scenario)
@@ -53,10 +54,11 @@ class FirstCest
         /**
          * create new table without table ID (required)
          */
-        $I->wantToTest('I want to test if i do not fill in table id');
+        $I->wantToTest('I want to test if i do fill table id');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->noTableID,$this->num,$this->date,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $this->reservation['tableId']="";
+        $I->inputForCreate($this->reservation);
         $I->erroNotification();
     }
     public function withoutNumberOfPerson(FirstStep $I, $scenario)
@@ -66,8 +68,10 @@ class FirstCest
          */
         $I->wantToTest('I want to test if I do not fill in number of person');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->noNum,$this->date,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $this->reservation['tableId']='3';
+        $this->reservation['num']="";
+        $I->inputForCreate($this->reservation);
         $I->erroNotification();
     }
     public function withoutStartTime(FirstStep $I, $scenario)
@@ -77,8 +81,11 @@ class FirstCest
          */
         $I->wantToTest('I want to text if i do not fill in start time');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->num,$this->date,$this->des,$this->noTime);
+        $I=new InfoStep($scenario);
+        $this
+            ->reservation['num']='4';
+        $this->reservation['startTime']="";
+        $I->inputForCreate($this->reservation);
         $I->erroNotification();
     }
     public function withoutElementNotRequired(FirstStep $I,$scenario)
@@ -86,10 +93,12 @@ class FirstCest
         /**
          * create new table without date (not required)
          */
-        $I->wantToTest('I want to do create new table successfully withour element not required');
+        $I->wantToTest('I want to do create new table successfully without element not required');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->num,$this->noDate,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $this->reservation['startTime']='18';
+        $this->reservation['date']="";
+        $I->inputForCreate($this->reservation);
         $I->comment('Create Successfully');
     }
     public function invalidTableId(FirstStep $I, $scenario)
@@ -97,21 +106,25 @@ class FirstCest
         /**
          * create new table with ID that not exist
          */
-        $I->wantToTest('I want to create new table successfully without element not required');
+        $I->wantToTest('I want to create new table with table Id not exist');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->invalidTableId,$this->num,$this->date,$this->des,$this->startTime);
+        $I=new InfoStep($scenario);
+        $this->reservation['date']='10/05/2019';
+        $this->reservation['tableId']="9";
+        $I->inputForCreate($this->reservation);
         $I->notExist();
     }
-    public function invalidSttartTime(FirstStep $I, $scenario)
+    public function invalidStartTime(FirstStep $I, $scenario)
     {
         /**
          * create new table with invalid start time
          */
-        $I->wantToTest('I want to do create new table successfully withour element not required');
+        $I->wantToTest('I want to do create new table with invalid start time');
         $I->goToCreate();
-        $I=new ThirdStep($scenario);
-        $I->inputForCreate($this->tableID,$this->num,$this->date,$this->des,$this->invalidTime);
+        $I=new InfoStep($scenario);
+        $this->reservation['tableId']='2';
+        $this->reservation['startTime']="10";
+        $I->inputForCreate($this->reservation);
         $I->wait(5);
         $I->erroMess();
 //        $I->waitForText(UpdatePage::$erroMess,30);
