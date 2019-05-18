@@ -11,18 +11,6 @@ class BookingCest
     public function tryToTest(AcceptanceTester $I)
     {
     }
-    protected $tableID;
-    protected $noTableID;
-    protected $invalidTableId;
-    protected $num;
-    protected $noNum;
-    protected $date;
-    protected $noDate;
-    protected $des;
-    protected $startTime;
-    protected $noTime;
-    protected $invalidTime;
-    protected $erroMes;
     protected $reservation;
     public function __construct()
     {
